@@ -473,26 +473,26 @@ def evaluate(
     images = wandb.Image(image_grid, caption="image_grid")
 
     logger.log({"examples": images})
-    # test_dir = os.path.join(config.output_dir, "samples")
-    # os.makedirs(test_dir, exist_ok=True)
-    # image_grid.save(f"{test_dir}/{epoch:04d}.png")
+    test_dir = os.path.join(config.output_dir, "samples")
+    os.makedirs(test_dir, exist_ok=True)
+    image_grid.save(f"{test_dir}/{epoch:04d}.png")
 
-    # # save segmentations we conditioned the samples on
-    # if config.segmentation_guided:
-    #     for seg_type in seg_batch.keys():
-    #         if seg_type.startswith("seg_"):
-    #             save_image(
-    #                 seg_batch[seg_type],
-    #                 f"{test_dir}/{epoch:04d}_cond_{seg_type}.png",
-    #                 normalize=True,
-    #                 nrow=cols,
-    #             )
+    # save segmentations we conditioned the samples on
+    if config.segmentation_guided:
+        for seg_type in seg_batch.keys():
+            if seg_type.startswith("seg_"):
+                save_image(
+                    seg_batch[seg_type],
+                    f"{test_dir}/{epoch:04d}_cond_{seg_type}.png",
+                    normalize=True,
+                    nrow=cols,
+                )
 
-    #     # as well as original images that the segs belong to
-    #     img_og = seg_batch["images"]
-    #     save_image(
-    #         img_og, f"{test_dir}/{epoch:04d}_orig.png", normalize=True, nrow=cols
-    #     )
+        # as well as original images that the segs belong to
+        img_og = seg_batch["images"]
+        save_image(
+            img_og, f"{test_dir}/{epoch:04d}_orig.png", normalize=True, nrow=cols
+        )
 
 
 # custom diffusers pipelines for sampling from segmentation-guided models
