@@ -359,11 +359,15 @@ def main(
             num_workers=4,
         )
 
-        eval_dataloader = torch.utils.data.DataLoader(
-            dataset_eval,
-            batch_size=config.eval_batch_size,
-            shuffle=eval_shuffle_dataloader,
-            num_workers=4,
+        eval_dataloader = (
+            torch.utils.data.DataLoader(
+                dataset_eval,
+                batch_size=config.eval_batch_size,
+                shuffle=eval_shuffle_dataloader,
+                num_workers=4,
+            )
+            if segmentation_guided
+            else None
         )
 
     # define the model

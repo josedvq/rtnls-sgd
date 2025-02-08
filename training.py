@@ -91,7 +91,7 @@ def train_loop(
     logger = wandb.init(project="rtnls-sgd", name=run_name)
 
     # for loading segs to condition on:
-    eval_dataloader = iter(eval_dataloader)
+    eval_dataloader = iter(eval_dataloader) if eval_dataloader is not None else None
 
     # Now you train the model
     start_epoch = 0
